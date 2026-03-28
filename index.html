@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Safoora Patel | Data Science Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --surface2: #1a1a26;
+    --accent: #7c6af7;
+    --accent2: #f7a26a;
+    --accent3: #6af7c8;
+    --text: #e8e8f0;
+    --text-muted: #8888aa;
+    --border: rgba(124, 106, 247, 0.2);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    overflow-x: hidden;
+  }
+
+  /* Animated background */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: 
+      radial-gradient(ellipse 80% 50% at 20% 20%, rgba(124,106,247,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 80% 80%, rgba(106,247,200,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 60% at 60% 30%, rgba(247,162,106,0.05) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Nav */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.2rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(10,10,15,0.8);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  /* Hero */
+  .hero {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8rem 3rem 4rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(124,106,247,0.1);
+    border: 1px solid var(--border);
+    border-radius: 2rem;
+    padding: 0.4rem 1rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 2rem;
+    width: fit-content;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .hero-tag::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--accent3);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(3rem, 7vw, 6rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.8s ease 0.1s both;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-sub {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    max-width: 500px;
+    line-height: 1.8;
+    margin-bottom: 3rem;
+    animation: fadeUp 0.8s ease 0.2s both;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 3rem;
+    animation: fadeUp 0.8s ease 0.3s both;
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  .stat-num span { color: var(--accent); }
+
+  .stat-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Scroll indicator */
+  .scroll-hint {
+    position: absolute;
+    bottom: 3rem;
+    left: 3rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: var(--text-muted);
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    animation: fadeUp 0.8s ease 0.5s both;
+  }
+
+  .scroll-line {
+    width: 40px;
+    height: 1px;
+    background: var(--text-muted);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .scroll-line::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: var(--accent);
+    animation: scanline 2s infinite;
+  }
+
+  @keyframes scanline {
+    to { left: 100%; }
+  }
+
+  /* Main content */
+  main {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 3rem 6rem;
+  }
+
+  /* Section headers */
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 3rem;
+  }
+
+  .section-num {
+    font-size: 0.65rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    border: 1px solid var(--border);
+    padding: 0.3rem 0.6rem;
+    border-radius: 0.3rem;
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* About section */
+  .about {
+    margin-bottom: 6rem;
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  .about-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    padding: 2rem;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+
+  .about-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-4px);
+  }
+
+  .about-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--accent2);
+  }
+
+  .about-card p {
+    font-size: 0.8rem;
+    line-height: 1.8;
+    color: var(--text-muted);
+  }
+
+  /* Findings */
+  .findings {
+    margin-bottom: 6rem;
+  }
+
+  .findings-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .finding-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    padding: 1.8rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s, border-color 0.3s;
+  }
+
+  .finding-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent);
+  }
+
+  .finding-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent3));
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .finding-card:hover::before { opacity: 1; }
+
+  .finding-icon {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+  }
+
+  .finding-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-bottom: 0.8rem;
+    color: var(--text);
+    letter-spacing: 0.02em;
+  }
+
+  .finding-card p {
+    font-size: 0.75rem;
+    line-height: 1.7;
+    color: var(--text-muted);
+  }
+
+  /* Correlation bars */
+  .correlations {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    padding: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .correlations h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: var(--accent2);
+  }
+
+  .corr-item {
+    display: grid;
+    grid-template-columns: 180px 1fr 50px;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .corr-label {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    text-align: right;
+  }
+
+  .corr-bar-bg {
+    height: 8px;
+    background: var(--surface2);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .corr-bar {
+    height: 100%;
+    border-radius: 4px;
+    background: linear-gradient(90deg, var(--accent), var(--accent3));
+    animation: growBar 1.5s ease both;
+    transform-origin: left;
+  }
+
+  @keyframes growBar {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+  }
+
+  .corr-val {
+    font-size: 0.72rem;
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  /* Model results */
+  .model {
+    margin-bottom: 6rem;
+  }
+
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .metric-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    padding: 2rem;
+    text-align: center;
+    transition: transform 0.3s, border-color 0.3s;
+  }
+
+  .metric-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent3);
+  }
+
+  .metric-val {
+    font-family: 'Syne', sans-serif;
+    font-size: 2.8rem;
+    font-weight: 800;
+    color: var(--accent3);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .metric-name {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 0.8rem;
+  }
+
+  .metric-desc {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  /* Feature importance */
+  .features {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    padding: 2rem;
+  }
+
+  .features h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: var(--accent2);
+  }
+
+  .feat-item {
+    display: grid;
+    grid-template-columns: 200px 1fr 60px;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .feat-label {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    text-align: right;
+  }
+
+  .feat-bar-bg {
+    height: 10px;
+    background: var(--surface2);
+    border-radius: 5px;
+    overflow: hidden;
+  }
+
+  .feat-bar {
+    height: 100%;
+    border-radius: 5px;
+    animation: growBar 1.5s ease both;
+    transform-origin: left;
+  }
+
+  .feat-bar.top { background: linear-gradient(90deg, var(--accent), #a89cf7); }
+  .feat-bar.mid { background: linear-gradient(90deg, var(--accent2), #f7c26a); }
+  .feat-bar.low { background: linear-gradient(90deg, #444460, #666688); }
+
+  .feat-val {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+  }
+
+  /* Tech stack */
+  .stack {
+    margin-bottom: 6rem;
+  }
+
+  .stack-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .stack-pill {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    padding: 0.6rem 1.2rem;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s;
+  }
+
+  .stack-pill:hover {
+    border-color: var(--accent);
+    color: var(--text);
+    transform: translateY(-2px);
+  }
+
+  .stack-pill .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  /* CTA */
+  .cta {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 1.5rem;
+    padding: 4rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(ellipse at center, rgba(124,106,247,0.08) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .cta h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .cta p {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    margin-bottom: 2rem;
+    line-height: 1.8;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.9rem 2rem;
+    border-radius: 0.5rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.8rem;
+    text-decoration: none;
+    transition: all 0.3s;
+    cursor: pointer;
+    border: none;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: white;
+  }
+
+  .btn-primary:hover {
+    background: #9585f9;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(124,106,247,0.4);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    margin-left: 1rem;
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--accent);
+    color: var(--text);
+    transform: translateY(-2px);
+  }
+
+  /* Footer */
+  footer {
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid var(--border);
+    padding: 2rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  footer p {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+  }
+
+  footer a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .hero { padding: 6rem 1.5rem 3rem; }
+    main { padding: 0 1.5rem 4rem; }
+    .about-grid, .findings-grid, .metrics-grid { grid-template-columns: 1fr; }
+    .hero-stats { gap: 1.5rem; }
+    .corr-item, .feat-item { grid-template-columns: 120px 1fr 40px; }
+    .cta { padding: 2rem; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">SP — Portfolio</div>
+  <ul class="nav-links">
+    <li><a href="#findings">Findings</a></li>
+    <li><a href="#model">Model</a></li>
+    <li><a href="#stack">Stack</a></li>
+    <li><a href="https://github.com/safoorapatel" target="_blank">GitHub ↗</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-tag">Data Science Project · 2024</div>
+  <h1>What makes a<br>student <em>succeed?</em></h1>
+  <p class="hero-sub">
+    An exploratory data analysis and machine learning study of 6,606 students — 
+    uncovering the hidden patterns behind academic performance.
+  </p>
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num">6<span>,</span>606</div>
+      <div class="stat-label">Students Analysed</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">20</div>
+      <div class="stat-label">Features Studied</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">0<span>.</span>69</div>
+      <div class="stat-label">Model R² Score</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">1<span>.</span>12</div>
+      <div class="stat-label">Avg Error (Marks)</div>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    Scroll to explore
+  </div>
+</section>
+
+<main>
+
+  <!-- About -->
+  <section class="about" id="about">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2 class="section-title">The Project</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="about-grid">
+      <div class="about-card">
+        <h3>The Question</h3>
+        <p>
+          What factors most strongly predict whether a student will perform well on their exams? 
+          Is it simply how many hours they study, or do deeper factors like parental involvement, 
+          access to resources, and sleep play a role?
+        </p>
+      </div>
+      <div class="about-card">
+        <h3>The Approach</h3>
+        <p>
+          Using Python, I performed a full EDA — cleaning the data, visualising distributions 
+          and relationships, and uncovering correlations. I then trained a Random Forest Regressor 
+          to predict exam scores and identify the most influential features.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Findings -->
+  <section class="findings" id="findings">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2 class="section-title">Key Findings</h2>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="findings-grid">
+      <div class="finding-card">
+        <div class="finding-icon">📊</div>
+        <h3>Normal Distribution</h3>
+        <p>Exam scores follow a clean bell curve centred around 67, indicating a well-balanced, unbiased dataset with no systematic advantage.</p>
+      </div>
+      <div class="finding-card">
+        <div class="finding-icon">📚</div>
+        <h3>Study Hours Matter</h3>
+        <p>A clear positive correlation (0.45) exists between hours studied and exam scores. However, outliers reveal that effort alone doesn't guarantee success.</p>
+      </div>
+      <div class="finding-card">
+        <div class="finding-icon">🏫</div>
+        <h3>Attendance is King</h3>
+        <p>With the strongest correlation at 0.58, attendance outperforms all other factors. Showing up consistently is the single best predictor of performance.</p>
+      </div>
+      <div class="finding-card">
+        <div class="finding-icon">👨‍👩‍👧</div>
+        <h3>Parental Involvement</h3>
+        <p>Students with higher parental involvement consistently scored higher, though the effect was moderate — suggesting it's a supporting factor, not a primary driver.</p>
+      </div>
+      <div class="finding-card">
+        <div class="finding-icon">😴</div>
+        <h3>Sleep — Surprising Result</h3>
+        <p>Sleep hours showed almost no correlation with exam scores. Medians remained consistent across 4 to 10 hours, suggesting other factors dominate.</p>
+      </div>
+      <div class="finding-card">
+        <div class="finding-icon">🎯</div>
+        <h3>Multi-Factor Reality</h3>
+        <p>No single variable tells the whole story. Outliers throughout the data confirm that human performance is complex, nuanced, and multi-dimensional.</p>
+      </div>
+    </div>
+
+    <div class="correlations">
+      <h3>Correlation with Exam Score</h3>
+      <div class="corr-item">
+        <span class="corr-label">Attendance</span>
+        <div class="corr-bar-bg"><div class="corr-bar" style="width:58%"></div></div>
+        <span class="corr-val">0.58</span>
+      </div>
+      <div class="corr-item">
+        <span class="corr-label">Hours Studied</span>
+        <div class="corr-bar-bg"><div class="corr-bar" style="width:45%"></div></div>
+        <span class="corr-val">0.45</span>
+      </div>
+      <div class="corr-item">
+        <span class="corr-label">Previous Scores</span>
+        <div class="corr-bar-bg"><div class="corr-bar" style="width:17%"></div></div>
+        <span class="corr-val">0.17</span>
+      </div>
+      <div class="corr-item">
+        <span class="corr-label">Tutoring Sessions</span>
+        <div class="corr-bar-bg"><div class="corr-bar" style="width:15%"></div></div>
+        <span class="corr-val">0.15</span>
+      </div>
+      <div class="corr-item">
+        <span class="corr-label">Physical Activity</span>
+        <div class="corr-bar-bg"><div class="corr-bar" style="width:3%"></div></div>
+        <span class="corr-val">0.03</span>
+      </div>
+      <div class="corr-item">
+        <span class="corr-label">Sleep Hours</span>
+        <div class="corr-bar-bg"><div class="corr-bar" style="width:2%"></div></div>
+        <span class="corr-val">-0.02</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Model -->
+  <section class="model" id="model">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2 class="section-title">Machine Learning Model</h2>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-val">0.69</div>
+        <div class="metric-name">R² Score</div>
+        <div class="metric-desc">The model explains 69% of the variation in student exam scores</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val">1.12</div>
+        <div class="metric-name">MAE (Marks)</div>
+        <div class="metric-desc">On average, predictions are only 1.12 marks away from the real score</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val">2.01</div>
+        <div class="metric-name">RMSE</div>
+        <div class="metric-desc">Even the worst predictions are within ~2 marks of the actual score</div>
+      </div>
+    </div>
+
+    <div class="features">
+      <h3>Feature Importances — What the model learned</h3>
+      <div class="feat-item">
+        <span class="feat-label">Attendance</span>
+        <div class="feat-bar-bg"><div class="feat-bar top" style="width:95%"></div></div>
+        <span class="feat-val">0.38</span>
+      </div>
+      <div class="feat-item">
+        <span class="feat-label">Hours Studied</span>
+        <div class="feat-bar-bg"><div class="feat-bar top" style="width:60%"></div></div>
+        <span class="feat-val">0.23</span>
+      </div>
+      <div class="feat-item">
+        <span class="feat-label">Previous Scores</span>
+        <div class="feat-bar-bg"><div class="feat-bar mid" style="width:25%"></div></div>
+        <span class="feat-val">0.10</span>
+      </div>
+      <div class="feat-item">
+        <span class="feat-label">Tutoring Sessions</span>
+        <div class="feat-bar-bg"><div class="feat-bar mid" style="width:10%"></div></div>
+        <span class="feat-val">0.03</span>
+      </div>
+      <div class="feat-item">
+        <span class="feat-label">Sleep Hours</span>
+        <div class="feat-bar-bg"><div class="feat-bar low" style="width:8%"></div></div>
+        <span class="feat-val">0.03</span>
+      </div>
+      <div class="feat-item">
+        <span class="feat-label">Gender / Internet / School</span>
+        <div class="feat-bar-bg"><div class="feat-bar low" style="width:3%"></div></div>
+        <span class="feat-val">&lt;0.01</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stack -->
+  <section class="stack" id="stack">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2 class="section-title">Tools & Stack</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="stack-grid">
+      <div class="stack-pill"><span class="dot"></span>Python</div>
+      <div class="stack-pill"><span class="dot"></span>Pandas</div>
+      <div class="stack-pill"><span class="dot"></span>NumPy</div>
+      <div class="stack-pill"><span class="dot"></span>Matplotlib</div>
+      <div class="stack-pill"><span class="dot"></span>Seaborn</div>
+      <div class="stack-pill"><span class="dot"></span>Scikit-learn</div>
+      <div class="stack-pill"><span class="dot"></span>Random Forest Regressor</div>
+      <div class="stack-pill"><span class="dot"></span>Google Colab</div>
+      <div class="stack-pill"><span class="dot"></span>GitHub</div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <h2>Explore the full analysis</h2>
+    <p>The complete notebook with all code, visualisations,<br>and step-by-step analysis is available on GitHub.</p>
+    <a href="https://github.com/safoorapatel/student-performance-analysis" target="_blank" class="btn btn-primary">
+      View on GitHub ↗
+    </a>
+    <a href="https://www.linkedin.com/in/safoorapatel" target="_blank" class="btn btn-secondary">
+      LinkedIn ↗
+    </a>
+  </section>
+
+</main>
+
+<footer>
+  <p>Built by <a href="https://github.com/safoorapatel">Safoora Patel</a> · Data Science Portfolio · 2024</p>
+  <p>Made with Python, curiosity & lots of <a href="#">coffee ☕</a></p>
+</footer>
+
+</body>
+</html>
